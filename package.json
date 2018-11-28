@@ -1,0 +1,25 @@
+{
+  "name": "appsync-template",
+  "version": "1.0.0",
+  "description": "Appsync template",
+  "main": "handler.js",
+  "scripts": {
+    "compile": "node graphql/index.js",
+    "docs": "graphdoc -s schema.graphql -f",
+    "ddocs": "aws s3 sync ./doc/schema s3://api.graphql.awesomelabph/template --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --cache-control \"max-age=30\"",
+    "updatedoc": "npm run compile && npm run docs && npm run ddocs"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "merge-graphql-schemas": "^1.5.7",
+    "serverless-appsync-plugin": "^1.0.5",
+    "serverless-scriptable-plugin": "^0.8.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.336.0"
+  },
+  "graphdoc": {
+    "output": "./doc/schema"
+  }
+}

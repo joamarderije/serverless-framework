@@ -1,0 +1,30 @@
+## TODO: change service name
+service: todo-app-api
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ap-southeast-1
+  deploymentBucket: deployments.serverless
+  stackTags:
+      Project: ${self:custom.project}
+  environment:
+      rawTable: ${self:resources.Resources.RawTable.Properties.TableName}
+  iamRoleStatements: ${file(config/role.yml):iamRoleStatements}
+
+plugins:
+    - serverless-scriptable-plugin
+    - serverless-appsync-plugin
+
+custom:
+    project: todo-app-api ##TODO: change Project Name
+    scriptHooks:
+        package:initialize:
+            - npm run compile
+    stage: ${opt:stage, self:provider.stage}
+    appSync: ${file(config/appSync.yml):appSync}
+        
+# TODO: UNCOMMENT if functions are added
+functions: ${file(config/functions.yml):functions}
+resources:
+    Resources: ${file(config/resources.yml):Resources}

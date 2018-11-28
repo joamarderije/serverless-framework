@@ -1,0 +1,12 @@
+dataSources:
+    - type: AMAZON_DYNAMODB
+      name: RawTable
+      config:
+          tableName:
+              Ref: RawTable
+          serviceRoleArn: { Fn::GetAtt: [ AppSyncServiceRole, Arn ] }
+
+    - type: NONE
+      name: None
+      config:
+          serviceRoleArn: { Fn::GetAtt: [ AppSyncServiceRole, Arn ] }

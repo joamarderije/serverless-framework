@@ -1,0 +1,7 @@
+type Sample {
+  id: ID!
+
+  att1: String
+
+  att2: Float
+}

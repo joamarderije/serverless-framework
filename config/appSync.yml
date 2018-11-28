@@ -1,0 +1,12 @@
+appSync:
+    name: ${self:custom.project}-${self:custom.stage}
+    authenticationType: AMAZON_COGNITO_USER_POOLS
+    userPoolConfig:
+        awsRegion: ${self:provider.region}
+        defaultAction: ALLOW
+        userPoolId:
+            Ref: UserPool
+    mappingTemplatesLocation: graphql
+    mappingTemplates: ${file(config/templates.yml):mappingTemplates}
+    schema: schema.graphql
+    dataSources: ${file(config/dataSources.yml):dataSources}

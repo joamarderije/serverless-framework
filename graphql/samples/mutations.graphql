@@ -1,0 +1,6 @@
+type Mutation {
+  createSample(
+    att1: String
+    att2: Float
+  ): Sample
+}

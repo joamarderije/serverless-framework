@@ -1,0 +1,14 @@
+type Note {
+
+    noteId: ID!
+
+    title: String!
+
+    content: String!
+
+    attached: String!
+
+    createAt: String!
+
+    author: User!
+}

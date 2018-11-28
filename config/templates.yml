@@ -1,0 +1,9 @@
+mappingTemplates:
+    ################################
+    #           SAMPLE             #
+    ################################
+    - dataSource: RawTable
+      type: Mutation
+      field: createSample
+      request: samples/requests/create.txt
+      response: default-response.txt

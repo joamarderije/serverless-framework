@@ -1,0 +1,19 @@
+# only list and get should be drop here 
+
+type Query {
+
+    listNote(
+        
+        noteId: ID!
+    ): [Note] 
+
+    
+    getNote(
+
+        noteId: ID!,
+
+        userId: ID!
+    ):Note
+
+   
+}

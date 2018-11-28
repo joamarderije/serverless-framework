@@ -1,0 +1,19 @@
+type Mutation {
+
+    createUser(
+        
+        name: String!
+    ): User!
+
+    updateUser(
+        
+        userId: ID, 
+        
+        name: String!
+    )
+
+    deleteUser(
+        
+        userId: ID
+    )
+}

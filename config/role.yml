@@ -1,0 +1,19 @@
+iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+          - "cognito-idp:Admin*User"
+          - "cognito-idp:*User*"
+          - "coognito-idp:*Group*"
+      Resource:
+          Fn::GetAtt: [ UserPool, Arn ]
+    - Effect: "Allow"
+      Action:
+          - "dynamodb:*Item"
+          - "dynamodb:Query"
+          - "dynamodb:Scan"
+          - "dynamodb:*Stream"
+          - "dynamodb:GetRecords"
+          - "dynamodb:GetShardIterator"
+      Resource:
+          - Fn::GetAtt: [ RawTable, Arn ]
+          ## TODO: Add other DynamoDB table arns

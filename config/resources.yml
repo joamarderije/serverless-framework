@@ -1,0 +1,133 @@
+Resources:
+    RawTable:
+        Type: "AWS::DynamoDB::Table"
+        Properties:
+            TableName: "${self:custom.project}-${self:custom.stage}"
+            KeySchema:
+                - AttributeName: id
+                  KeyType: HASH
+                - AttributeName: sort
+                  KeyType: RANGE
+            AttributeDefinitions:
+                - AttributeName: id
+                  AttributeType: S
+                - AttributeName: sort
+                  AttributeType: S
+                - AttributeName: doc_type
+                  AttributeType: S
+            ProvisionedThroughput:
+                ReadCapacityUnits: 1
+                WriteCapacityUnits: 1
+            GlobalSecondaryIndexes:
+                - IndexName: DocType
+                  KeySchema:
+                      - AttributeName: doc_type
+                        KeyType: HASH
+                      - AttributeName: sort
+                        KeyType: RANGE
+                  Projection:
+                      ProjectionType: ALL
+                  ProvisionedThroughput:
+                      ReadCapacityUnits: 1
+                      WriteCapacityUnits: 1
+            ## UNCOMMENT IF STREAMS ARE ENABLED ##
+            # StreamSpecification:
+            #     StreamViewType: NEW_IMAGE
+
+    AppSyncServiceRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+            RoleName: "${self:custom.project}ServiceRole-${self:custom.stage}"
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                    - Effect: "Allow"
+                      Principal:
+                          Service:
+                              - "appsync.amazonaws.com"
+                      Action:
+                          - "sts:AssumeRole"
+            Policies:
+                - PolicyName: "${self:custom.project}Policy-${self:custom.stage}"
+                  PolicyDocument:
+                      Version: "2012-10-17"
+                      Statement:
+                          - Effect: "Allow"
+                            Action:
+                                - "dynamodb:Query"
+                                - "dynamodb:Scan"
+                                - "dynamodb:*Item"
+                                - "lambda:invokeFunction"
+                            Resource:
+                                - Fn::GetAtt: [ RawTable, Arn ]
+                      ## TODO: ADD DynamoDB and Lambda Arns
+
+    ## Uncomment if SNS is enabled in UserPool
+    # SNSRole:
+    #     Type: "AWS::IAM::Role"
+    #     Properties:
+    #         AssumeRolePolicyDocument:
+    #             Version: "2012-10-17"
+    #             Statement:
+    #                 - Effect: "Allow"
+    #                   Principal:
+    #                       Service:
+    #                           - "cognito-idp.amazonaws.com"
+    #                   Action:
+    #                       - "sts:AssumeRole"
+    #         Policies:
+    #             - PolicyName: "${self:custom.project}CognitoSNSPolicy-${self:custom.stage}"
+    #               PolicyDocument:
+    #                   Version: "2012-10-17"
+    #                   Statement:
+    #                       - Effect: "Allow"
+    #                         Action: "sns:publish"
+    #                         Resource: "*"
+
+    UserPool:
+        Type: "AWS::Cognito::UserPool"
+        Properties:
+            UserPoolName: "${self:custom.project}-${self:custom.stage}"
+            AdminCreateUserConfig:
+                AllowAdminCreateUserOnly: false ##TODO: false if self registration is enabled
+            ##TODO: Uncomment for verification method
+            # AutoVerifiedAttributes:
+            #     - phone_number
+            #     - email
+            MfaConfiguration: "OFF" # OFF | OPTIONAL | REQUIRED
+            ##TODO Uncomment if SNS is enabled in UserPool
+            # SmsConfiguration:
+            #     ExternalId: "${self:custom.project}-${self:custom.stage}-external"
+            #     SnsCallerArn:
+            #         Fn::GetAtt: [ SNSRole, Arn ]
+            Schema:
+                ## TODO: Add custom attributes if any
+                - AttributeDataType: String
+                  Mutable: true
+                  Name: custom_att
+            Policies:
+                PasswordPolicy:
+                    RequireLowercase: false
+                    RequireUppercase: false
+                    RequireSymbols: false
+                    RequireNumbers: false
+                    MinimumLength: 6
+            UserPoolTags:
+                Project: ${self:custom.project}
+                Stage: ${self:custom.stage}
+
+    UserPoolWebClient:
+        Type: "AWS::Cognito::UserPoolClient"
+        Properties:
+            ClientName: "${self:custom.project}-web-${self:custom.stage}"
+            GenerateSecret: false
+            UserPoolId:
+                Ref: UserPool
+
+    UserPoolMobileClient:
+        Type: "AWS::Cognito::UserPoolClient"
+        Properties:
+            ClientName: "${self:custom.project}-mobile-${self:custom.stage}"
+            GenerateSecret: true
+            UserPoolId:
+                Ref: UserPool
