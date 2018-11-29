@@ -13,4 +13,13 @@ type Query {
 
     ): NoteConnection
 
+
+  getNoteby (
+
+    date: String
+
+  ): Note
 }
+
+
+

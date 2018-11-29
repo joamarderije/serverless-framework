@@ -34,11 +34,11 @@ mappingTemplates:
     #   request: note/request/list.txt
     #   response: default-list-response.txt
 
-    # - dataSource: RawTable
-    #   type: Query
-    #   field: getNote
-    #   request: note/request/get.txt
-    #   response: default-response.txt
+    - dataSource: RawTable
+      type: Query
+      field: getNoteby
+      request: note/request/getNote.txt
+      response: default-response.txt
 
 
 

@@ -5,10 +5,11 @@ schema {
 
 type Query {
   listByDate(date1: String, date2: String, nextToken: String): NoteConnection
+  getNoteby(date: String): Note
 }
 
 type Mutation {
-  createNote(userId: String, title: String!, content: String!, attachment: String!, date: String!): Note
+  createNote(userId: String, title: String!, content: String!, attachment: String!, date: String): Note
 }
 
 type Note {
