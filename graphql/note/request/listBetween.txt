@@ -1,0 +1,24 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        ## Provide a query expression. **
+        "expression": "id = :id and sort BETWEEN :date1 and :date2",
+        "expressionValues" : {
+            ":id" : {
+                "S" : "${ctx.identity.username}"
+            },
+            
+            ":date1": {
+                "S": "NOTE$_{ctx.arguments.date1}"
+            },
+
+            ":date2": {
+                "S": "NOTE_${ctx.arguments.date2}"
+            }
+        }
+    },
+    ## Add 'limit' and 'nextToken' arguments to this field in your schema to implement pagination. **
+    "limit": $util.defaultIfNull(${ctx.args.limit}, 20),
+    "nextToken": $util.toJson($util.defaultIfNullOrBlank($ctx.args.nextToken, null))
+}

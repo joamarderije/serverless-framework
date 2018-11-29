@@ -1,9 +1,45 @@
 mappingTemplates:
     ################################
-    #           SAMPLE             #
+    #           NOTES              #
     ################################
+  
+
     - dataSource: RawTable
-      type: Mutation
-      field: createSample
-      request: samples/requests/create.txt
+      type : Mutation
+      field: createNote
+      request:  note/request/create.txt
       response: default-response.txt
+
+    - dataSource: RawTable
+      type : Query
+      field: listByDate
+      request:  note/request/listBetween.txt
+      response: default-paginated-response.txt
+
+    # - dataSource: RawTable
+    #   type : Mutation
+    #   field: updateNote
+    #   request: note/request/update.txt
+    #   response: default-response.txt
+
+    # - dataSource: RawTable
+    #   type : Mutation
+    #   field: deleteNote
+    #   request: note/request/delete.txt
+    #   response: default-response.txt
+
+    # - dataSource: RawTable
+    #   type : Query
+    #   field : listNote
+    #   request: note/request/list.txt
+    #   response: default-list-response.txt
+
+    # - dataSource: RawTable
+    #   type: Query
+    #   field: getNote
+    #   request: note/request/get.txt
+    #   response: default-response.txt
+
+
+
+    

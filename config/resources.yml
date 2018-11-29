@@ -32,7 +32,7 @@ Resources:
                       WriteCapacityUnits: 1
             ## UNCOMMENT IF STREAMS ARE ENABLED ##
             # StreamSpecification:
-            #     StreamViewType: NEW_IMAGE
+            #     StreamViewType: NEW_IMAGE 
 
     AppSyncServiceRole:
         Type: "AWS::IAM::Role"
@@ -60,6 +60,7 @@ Resources:
                                 - "lambda:invokeFunction"
                             Resource:
                                 - Fn::GetAtt: [ RawTable, Arn ]
+                                
                       ## TODO: ADD DynamoDB and Lambda Arns
 
     ## Uncomment if SNS is enabled in UserPool
@@ -91,9 +92,9 @@ Resources:
             AdminCreateUserConfig:
                 AllowAdminCreateUserOnly: false ##TODO: false if self registration is enabled
             ##TODO: Uncomment for verification method
-            # AutoVerifiedAttributes:
-            #     - phone_number
-            #     - email
+            AutoVerifiedAttributes:
+                # - phone_number
+                - email
             MfaConfiguration: "OFF" # OFF | OPTIONAL | REQUIRED
             ##TODO Uncomment if SNS is enabled in UserPool
             # SmsConfiguration:
@@ -107,11 +108,11 @@ Resources:
                   Name: custom_att
             Policies:
                 PasswordPolicy:
-                    RequireLowercase: false
-                    RequireUppercase: false
-                    RequireSymbols: false
-                    RequireNumbers: false
-                    MinimumLength: 6
+                    RequireLowercase: true
+                    RequireUppercase: true
+                    RequireSymbols: true
+                    RequireNumbers: true
+                    MinimumLength: 8
             UserPoolTags:
                 Project: ${self:custom.project}
                 Stage: ${self:custom.stage}

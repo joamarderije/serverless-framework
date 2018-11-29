@@ -1,0 +1,20 @@
+type Note {
+
+    userId: String
+
+    title: String
+
+    content: String
+
+    attachment: String
+
+    date: String
+
+}
+
+type NoteConnection {
+
+    items: [Note!]!
+
+    nextToken: String
+}

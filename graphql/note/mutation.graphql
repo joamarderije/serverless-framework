@@ -1,31 +1,14 @@
 type Mutation {
-    
-    createNote(
-        content: String!, 
-        
-        attached: String!, 
-        
-        createAt: String!, 
-        
-        author: User!
-    ): Note!
+    createNote (
+    userId: String
 
-    updateNote(
-        
-        noteId: ID, 
-        
-        content: String!, 
-        
-        attached: String!, 
-        
-        createAt: String!, 
-        
-        author: User!
-    ): Note!
+    title: String!
 
-    deleteNote(
-        
-        noteId: ID
-    ): Note!
-    
+    content: String!
+
+    attachment: String!
+
+    date: String
+
+    ): Note
 }

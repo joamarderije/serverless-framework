@@ -1,0 +1,25 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  listByDate(date1: String, date2: String, nextToken: String): NoteConnection
+}
+
+type Mutation {
+  createNote(userId: String, title: String!, content: String!, attachment: String!, date: String!): Note
+}
+
+type Note {
+  userId: String
+  title: String
+  content: String
+  attachment: String
+  date: String
+}
+
+type NoteConnection {
+  items: [Note!]!
+  nextToken: String
+}

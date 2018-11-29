@@ -2,18 +2,15 @@
 
 type Query {
 
-    listNote(
-        
-        noteId: ID!
-    ): [Note] 
+  listByDate (
 
-    
-    getNote(
 
-        noteId: ID!,
+    date1: String,
 
-        userId: ID!
-    ):Note
+    date2: String,
 
-   
+    nextToken: String
+
+    ): NoteConnection
+
 }
