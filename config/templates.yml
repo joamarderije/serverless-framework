@@ -16,17 +16,17 @@ mappingTemplates:
       request:  note/request/listBetween.txt
       response: default-paginated-response.txt
 
-    # - dataSource: RawTable
-    #   type : Mutation
-    #   field: updateNote
-    #   request: note/request/update.txt
-    #   response: default-response.txt
+    - dataSource: RawTable
+      type : Mutation
+      field: updateNote
+      request: note/request/updatenote.txt
+      response: default-response.txt
 
-    # - dataSource: RawTable
-    #   type : Mutation
-    #   field: deleteNote
-    #   request: note/request/delete.txt
-    #   response: default-response.txt
+    - dataSource: RawTable
+      type : Mutation
+      field: deleteNote
+      request: note/request/deleteNote.txt
+      response: default-response.txt
 
     # - dataSource: RawTable
     #   type : Query

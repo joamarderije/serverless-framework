@@ -11,4 +11,18 @@ type Mutation {
     date: String
 
     ): Note
+
+    updateNote (
+        
+        input: updateNoteInput
+    
+    ): Note
+
+    deleteNote (
+    
+    date: String
+
+    ): Note
 }
+
+

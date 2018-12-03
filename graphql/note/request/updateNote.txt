@@ -1,0 +1,17 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "UpdateItem",
+    "key" : {
+        ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+        "id": $util.dynamodb.toDynamoDBJson($ctx.identity.username),
+        "sort": $util.dynamodb.toDynamoDBJson($ctx.arguments.date)
+    },
+    "update" : {
+        "expression" : "SET title = :title, content = :content, attachment = :attachment",
+        "expressionValues": {
+            ":title" : { "S": "${context.arguments.input.title}" },
+            ":content" : { "S": "${context.arguments.input.content}" },
+            ":attachment" : { "S": "${context.arguments.input.attachment}" }
+        }
+    }
+}

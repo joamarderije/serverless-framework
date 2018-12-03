@@ -10,6 +10,15 @@ type Query {
 
 type Mutation {
   createNote(userId: String, title: String!, content: String!, attachment: String!, date: String): Note
+  updateNote(input: updateNoteInput): Note
+  deleteNote(date: String): Note
+}
+
+input updateNoteInput {
+  date: String
+  title: String
+  content: String
+  attachment: String
 }
 
 type Note {

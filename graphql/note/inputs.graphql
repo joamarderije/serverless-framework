@@ -1,0 +1,9 @@
+input updateNoteInput {
+    date: String
+    
+    title: String
+
+    content: String
+
+    attachment: String
+}
